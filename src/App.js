@@ -1,30 +1,46 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import axios from 'axios';
-
+import React, { Component } from 'react'
+import './App.css'
+import Bubble from './Bubble'
+import CallRestAPI from './CallRestAPI'
 class App extends Component {
-    state = {
-        persons: []
+    constructor(props){
+        super(props);
+        this.state = {
+            countData:null
+        }
+    }
+    callBack = (callData) =>{
+        this.setState({countData:callData});
     };
 
-    componentDidMount() {
-        axios.get(`http://178.62.43.236/stack/post/`)
-            .then(res => {
-                const persons = res.data;
-                this.setState({ persons });
-            })
+    componentWillMount(){
+        console.log("Before Component mounted = " + JSON.stringify(this.state.countData))
+    }
+
+    componentDidMount(){
+        console.log("After component mounted = " + JSON.stringify(this.state.countData))
     }
 
     render() {
-        return (
-            <div className="App">
-                { this.state.persons.map(person => <p>{person.tags}</p>)}
-            </div>
+        console.log("During rendering = " + JSON.stringify(this.state.countData));
+        if(this.state.countData !== null){
+            return (
+                <div className='App'>
 
-        );
+                    <div>
+                        <CallRestAPI callbackFromParent={this.callBack}/>
+                        <Bubble  data = {this.state.countData.map(p => parseInt(p))} size={[500,500]}/>
+                    </div>
+                </div>
+            )
+        }else{
+            return(
+                <CallRestAPI callbackFromParent={this.callBack}/>
+            )
+        }
+
     }
-}
 
+}
 
 export default App;
