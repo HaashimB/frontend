@@ -13,14 +13,6 @@ class App extends Component {
         this.setState({countData:callData});
     };
 
-    componentWillMount(){
-        console.log("Before Component mounted = " + JSON.stringify(this.state.countData))
-    }
-
-    componentDidMount(){
-        console.log("After component mounted = " + JSON.stringify(this.state.countData))
-    }
-
     render() {
         console.log("During rendering = " + JSON.stringify(this.state.countData));
         if(this.state.countData !== null){
@@ -29,7 +21,7 @@ class App extends Component {
 
                     <div>
                         <CallRestAPI callbackFromParent={this.callBack}/>
-                        <Bubble  data = {this.state.countData.map(p => parseInt(p))} size={[500,500]}/>
+                        <Bubble  data = {this.state.countData.map(p => parseInt(p))} size={[500,500]} text = 'Default Text'/>
                     </div>
                 </div>
             )
